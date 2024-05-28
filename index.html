@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced 3D Animated Background</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      perspective: 1000px;
+      background-color: #000;
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: #ff9966;
+      opacity: 0.8;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  <script>
+    const background = document.querySelector('.background');
+    const numParticles = 200;
+
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.left = `${Math.random() * 100}vw`;
+      particle.style.top = `${Math.random() * 100}vh`;
+      background.appendChild(particle);
+
+      const tl = gsap.timeline({ repeat: -1 });
+      tl.to(particle, {
+        duration: Math.random() * 4 + 2,
+        x: Math.random() * 200 - 100,
+        y: Math.random() * 200 - 100,
+        z: Math.random() * -400 - 200,
+        opacity: 0,
+        ease: "power1.inOut",
+      });
+    }
+
+    // Create multiple particles
+    for (let i = 0; i < numParticles; i++) {
+      createParticle();
+    }
+  </script>
+</body>
+</html>
